@@ -1,0 +1,74 @@
+unit uMunicipioModel;
+
+interface
+uses
+System.Classes, uConexaoSingleTon, FireDac.Comp.Client,Data.DB, System.SysUtils, Dialogs, uMunicipioDto;
+
+type
+  TMunicipioModel = class
+  private
+    oQuery : TFDQuery;
+  public
+    function Checar(var oMunicipio : TMunicipio):boolean;
+    function Salvar(var oMunicipio : TMunicipio):boolean;
+    destructor Destroy; override;
+    constructor Create;
+  end;
+
+implementation
+
+{ TMunicipioModel }
+
+function TMunicipioModel.Checar(var oMunicipio: TMunicipio): boolean;
+begin
+try
+    oQuery.SQL.Clear;
+    oQuery.Open('select idcidade,nome,estado_idestado from cidade WHERE nome=''' + oMunicipio.Nome+ '''  ');
+    if (not(oQuery.IsEmpty)) then
+    begin
+       oMunicipio.IDMunicipio := oQuery.FieldByName('idcidade').AsInteger;
+      oMunicipio.Estado.IDEstado := oQuery.FieldByName('estado_idestado').AsInteger;
+      Result := True;
+    end
+    else if (oQuery.IsEmpty) then
+    begin
+      Result := False;
+    end;
+  except
+    raise Exception.Create('Não Foi possível acessar o banco de dados');
+
+  end;
+end;
+
+constructor TMunicipioModel.Create;
+begin
+    oQuery:= TFDQuery.Create(nil);
+    oQuery.Connection:= TConexaoSigleton.GetInstancia;
+end;
+
+destructor TMunicipioModel.Destroy;
+begin
+  if(assigned(oQuery))then
+    FreeAndNil(oQuery);
+
+  inherited;
+end;
+
+function TMunicipioModel.Salvar(var oMunicipio: TMunicipio): boolean;
+begin
+  try
+    oQuery.SQL.Clear;
+    oQuery.SQL.Add('INSERT INTO cidade (idcidade, nome, estado_idestado) VALUES (' +IntToStr(oMunicipio.IDMunicipio) + ', ''' + oMunicipio.Nome + ''', ''' +oMunicipio.Estado.UF + ''')');
+    oQuery.ExecSQL;
+    if (not(oQuery.IsEmpty)) then
+    begin
+      Result := True;
+    end
+    else if (oQuery.IsEmpty) then
+      Result := False;
+  except
+    raise Exception.Create('Não Foi possível inserir o usuário');
+  end;
+end;
+
+end.

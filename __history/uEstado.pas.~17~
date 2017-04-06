@@ -1,0 +1,104 @@
+unit uEstado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls, uEstadoDto, uEstadoController;
+
+type
+  TfrmEstado = class(TfrmBase)
+    edtUf: TEdit;
+    edtNome: TEdit;
+    edtIdEstado: TEdit;
+    destructor Destroy; override;
+    procedure AdicionarDto;
+    procedure btnSalvarClick(Sender: TObject);
+
+    procedure FormCreate(Sender: TObject);
+    procedure edtUfExit(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+  private
+    oEstado: TEstado;
+    oEstadoController: TEstadoController;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmEstado: TfrmEstado;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmEstado.AdicionarDto;
+begin
+  oEstado.IDEstado := StrToInt(edtIdEstado.Text);
+  oEstado.UF := edtUf.Text;
+  oEstado.Nome := edtNome.Text;
+end;
+
+procedure TfrmEstado.btnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  AdicionarDto;
+  if (oEstadoController.Delete(oEstado)) then
+  begin
+    ShowMessage('Usuário Alterado Com Sucesso!');
+  end
+  else
+    ShowMessage('Usuário Cadastrado Com Sucesso!');
+end;
+
+procedure TfrmEstado.btnSalvarClick(Sender: TObject);
+begin
+  inherited;
+  AdicionarDto;
+
+  if (oEstadoController.Salvar(oEstado)) then
+  begin
+    ShowMessage('Usuário Alterado Com Sucesso!');
+  end
+  else
+    ShowMessage('Usuário Cadastrado Com Sucesso!');
+
+end;
+
+destructor TfrmEstado.Destroy;
+begin
+  if (assigned(oEstado)) then
+    FreeAndNil(oEstado);
+
+  if (assigned(oEstadoController)) then
+    FreeAndNil(oEstadoController);
+
+  frmEstado := nil;
+
+  inherited;
+end;
+
+procedure TfrmEstado.edtUfExit(Sender: TObject);
+begin
+  inherited;
+  oEstado.UF := edtUf.Text;
+
+  if (oEstadoController.Checar(oEstado)) then
+  begin
+    edtNome.Text := oEstado.Nome;
+    edtIdEstado.Text := IntToStr(oEstado.IDEstado);
+  end;
+end;
+
+procedure TfrmEstado.FormCreate(Sender: TObject);
+begin
+  inherited;
+
+  oEstado := TEstado.Create;
+
+  oEstadoController := TEstadoController.Create;
+end;
+
+end.

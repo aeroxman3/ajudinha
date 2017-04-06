@@ -1,0 +1,18 @@
+program Ajudinha;
+
+uses
+  Vcl.Forms,
+  uPrincipal in 'uPrincipal.pas' {frmPrincipal},
+  uBase in 'uBase.pas' {frmBase},
+  uEstado in 'uEstado.pas' {frmEstado};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TfrmBase, frmBase);
+  Application.CreateForm(TfrmEstado, frmEstado);
+  Application.Run;
+end.

@@ -1,0 +1,62 @@
+ unit uMunicipio;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls, uMunicipioDto;
+
+type
+  TfrmMunicipio = class(TfrmBase)
+    edtIdMunicipio: TEdit;
+    edtNomeMunicipio: TEdit;
+    edtUFEStado: TEdit;
+    procedure FormCreate(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+  private
+    oMunicipio : TMunicipio;
+  public
+    procedure AdicionarDto;
+    destructor Destroy; override;
+  end;
+
+var
+  frmMunicipio: TfrmMunicipio;
+
+implementation
+
+{$R *.dfm}
+
+{ TfrmMunicipio }
+
+procedure TfrmMunicipio.AdicionarDto;
+begin
+  oMunicipio.IDMunicipio := StrToInt(edtIdMunicipio.Text);
+  oMunicipio.Nome := edtNomeMunicipio.Text;
+  oMunicipio.Estado.UF := edtUFEStado.Text;
+end;
+
+procedure TfrmMunicipio.btnSalvarClick(Sender: TObject);
+begin
+  inherited;
+  AdicionarDto;
+end;
+
+destructor TfrmMunicipio.Destroy;
+begin
+  if(assigned(oMunicipio))then
+    FreeAndNil(oMunicipio);
+
+  frmMunicipio := nil;
+  inherited;
+end;
+
+procedure TfrmMunicipio.FormCreate(Sender: TObject);
+begin
+  inherited;
+  if(not(assigned(oMunicipio)))then
+    oMunicipio := TMunicipio.Create;
+end;
+
+end.

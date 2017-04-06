@@ -1,0 +1,22 @@
+unit uMunicipioController;
+
+interface
+uses
+  uMunicipioDto;
+type
+  TMuncipioController = class
+  private
+  public
+    function Salvar(var oMunicipio: TMunicipio): boolean;
+  end;
+
+implementation
+
+{ TMuncipioController }
+
+function TMuncipioController.Salvar(var oMunicipio: TMunicipio): boolean;
+begin
+
+end;
+
+end.

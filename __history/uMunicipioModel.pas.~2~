@@ -1,0 +1,16 @@
+unit uMunicipioModel;
+
+interface
+uses
+System.Classes, uConexaoSingleTon FireDac.Comp.Client,Data.DB, System.SysUtils, Dialogs;
+
+type
+  TMunicipioModel = class
+  private
+  oQuery : TFDQuery;
+  public
+  end;
+
+implementation
+
+end.

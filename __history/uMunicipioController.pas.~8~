@@ -1,0 +1,81 @@
+unit uMunicipioController;
+
+interface
+uses
+  System.SysUtils, uMunicipioDto, uEstadoModel, Dialogs, uMunicipioModel;
+type
+  TMuncipioController = class
+  private
+    oModelEstado : TEstadoModel;
+    oModelMunicipio : TMunicipioModel;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function Salvar(var oMunicipio: TMunicipio): boolean;
+    function ConverterUF(var oMunicipio: TMunicipio): boolean;
+    function Checar(var oMunicipio: TMunicipio): boolean;
+    function ConverterID(var oMunicipio: TMunicipio): boolean;
+  end;
+
+implementation
+
+{ TMuncipioController }
+
+function TMuncipioController.Checar(var oMunicipio: TMunicipio): boolean;
+begin
+  if(oModelMunicipio.Checar(oMunicipio))then
+  begin
+       ConverterID(oMunicipio);
+       Result := True;
+  end
+  else
+    Result := False;
+
+end;
+
+function TMuncipioController.ConverterID(var oMunicipio: TMunicipio): boolean;
+begin
+  Result := oModelEstado.SelecionarUF(oMunicipio);
+end;
+
+function TMuncipioController.ConverterUF(var oMunicipio: TMunicipio): boolean;
+begin
+ Result := oModelEstado.SelecionarID(oMunicipio);
+end;
+
+constructor TMuncipioController.Create;
+begin
+  oModelEstado := TEstadoModel.Create;
+  oModelMunicipio := TMunicipioModel.Create;
+end;
+
+destructor TMuncipioController.Destroy;
+begin
+
+   if (assigned(oModelEstado)) then
+    FreeAndNil(oModelEstado);
+
+  if (assigned(oModelMunicipio)) then
+    FreeAndNil(oModelMunicipio);
+  inherited;
+end;
+
+function TMuncipioController.Salvar(var oMunicipio: TMunicipio): boolean;
+begin
+  if(ConverterUF(oMunicipio)=false)then
+   begin
+    ShowMessage('Essa UF não tem registro, vá para o cadastro de estado e cadastre ela!');
+   end;
+  if()then
+  begin
+  //alterar
+  end
+  else
+  begin
+   oModelMunicipio.Salvar(oMunicipio);
+  end;
+
+
+end;
+
+end.

@@ -1,0 +1,46 @@
+unit uMunicipioController;
+
+interface
+uses
+  System.SysUtils, uMunicipioDto, uEstadoModel, Dialogs;
+type
+  TMuncipioController = class
+  private
+    oModelEstado : TEstadoModel;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function Salvar(var oMunicipio: TMunicipio): boolean;
+    function ConverterUF(var oMunicipio: TMunicipio): boolean;
+  end;
+
+implementation
+
+{ TMuncipioController }
+
+function TMuncipioController.ConverterUF(var oMunicipio: TMunicipio): boolean;
+begin
+ Result := oModelEstado.SelecionarID(oMunicipio);
+end;
+
+constructor TMuncipioController.Create;
+begin
+  oModelEstado := TEstadoModel.Create;
+end;
+
+destructor TMuncipioController.Destroy;
+begin
+
+   if (assigned(oModelEstado)) then
+    FreeAndNil(oModelEstado);
+
+  inherited;
+end;
+
+function TMuncipioController.Salvar(var oMunicipio: TMunicipio): boolean;
+begin
+  ConverterUF(oMunicipio);
+
+end;
+
+end.

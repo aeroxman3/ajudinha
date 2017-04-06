@@ -1,0 +1,42 @@
+unit uEstadoModel;
+
+interface
+
+uses
+  uEstadoDto, System.Classes, FireDac.Comp.Client, Data.DB, uConexaoSingleTon,
+  System.SysUtils, Dialogs, FireDac.DApt;
+
+type
+  TEstadoModel = class
+  private
+    oQuery: TFDQuery;
+  public
+    function Salvar(var oestado: TEstado): boolean;
+
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+{ TEstadoModel }
+
+constructor TEstadoModel.Create;
+begin
+  oQuery := TFDQuery.Create(nil);
+  oQuery.Connection := TConexaoSigleton.GetInstancia;
+end;
+
+destructor TEstadoModel.Destroy;
+begin
+  if (assigned(oQuery)) then
+    FreeAndNil(oQuery);
+  inherited;
+end;
+
+function TEstadoModel.Salvar(var oestado: TEstado): boolean;
+begin
+
+end;
+
+end.

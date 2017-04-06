@@ -1,0 +1,25 @@
+unit uMunicipio;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls;
+
+type
+  TfrmMunicipio = class(TfrmBase)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmMunicipio: TfrmMunicipio;
+
+implementation
+
+{$R *.dfm}
+
+end.

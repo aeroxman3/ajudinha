@@ -1,0 +1,37 @@
+ unit uMunicipio;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls;
+
+type
+  TfrmMunicipio = class(TfrmBase)
+    edtIdMunicipio: TEdit;
+    edtNomeMunicipio: TEdit;
+    edtUFEStado: TEdit;
+  private
+    { Private declarations }
+  public
+    destructor Destroy; override;
+  end;
+
+var
+  frmMunicipio: TfrmMunicipio;
+
+implementation
+
+{$R *.dfm}
+
+{ TfrmMunicipio }
+
+destructor TfrmMunicipio.Destroy;
+begin
+
+  frmMunicipio := nil;
+  inherited;
+end;
+
+end.

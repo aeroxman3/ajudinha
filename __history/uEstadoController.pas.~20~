@@ -1,0 +1,48 @@
+unit uEstadoController;
+
+interface
+
+uses
+  Dialogs, uEstadoDto, System.SysUtils,
+  FireDAC.Comp.Client, uEstadoModel;
+
+type
+  TEstadoController = class
+  private
+    oModel: TEstadoModel;
+
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function Salvar(var oEstado: TEstado): boolean;
+
+  end;
+
+implementation
+
+constructor TEstadoController.Create;
+begin
+  if (not(assigned(oModel))) then
+    oModel := TEstadoModel.Create;
+end;
+
+destructor TEstadoController.Destroy;
+begin
+
+  if (assigned(oModel)) then
+    FreeAndNil(oModel);
+
+  inherited;
+
+end;
+
+function TEstadoController.Salvar(var oEstado: TEstado): boolean;
+begin
+ if(oModel.Salvar(oEstado))then
+ begin
+    ShowMessage('Usuário cadastrado com sucesso!');
+ end;
+
+end;
+
+end.

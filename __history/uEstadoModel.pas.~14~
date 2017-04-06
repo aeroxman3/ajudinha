@@ -1,0 +1,54 @@
+unit uEstadoModel;
+
+interface
+
+uses
+  uEstadoDto, System.Classes, FireDac.Comp.Client, Data.DB, uConexaoSingleTon,
+  System.SysUtils, Dialogs, FireDac.DApt, FireDAC.Stan.Async;
+
+type
+  TEstadoModel = class
+  private
+    oQuery: TFDQuery;
+  public
+    function Salvar(var oestado: TEstado): boolean;
+
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+{ TEstadoModel }
+
+constructor TEstadoModel.Create;
+begin
+  oQuery := TFDQuery.Create(nil);
+  oQuery.Connection := TConexaoSigleton.GetInstancia;
+end;
+
+destructor TEstadoModel.Destroy;
+begin
+  if (assigned(oQuery)) then
+    FreeAndNil(oQuery);
+  inherited;
+end;
+
+function TEstadoModel.Salvar(var oestado: TEstado): boolean;
+begin
+  try
+    oQuery.SQL.Clear;
+   oQuery.SQL.Add('INSERT INTO estado (idestado, nome, uf) VALUES (' + IntToStr(oEstado.IDEstado) + ', ''' + oEstado.Nome + ''', ''' +oEstado.UF + ''')');
+    oQuery.ExecSQL;
+     if (not(oQuery.IsEmpty)) then
+     begin
+            Result := True;
+     end
+    else if (oQuery.IsEmpty) then
+      Result := False;
+  except
+    raise Exception.create('Não Foi possível inserir o usuário');
+  end;
+end;
+
+end.

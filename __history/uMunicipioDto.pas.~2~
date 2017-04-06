@@ -1,0 +1,135 @@
+unit uMunicipioDto;
+
+interface
+uses
+  uEstadoDto, System.SysUtils;
+
+type
+  TMunicipio = class
+  private
+    FIDMunicipio: Integer;
+    FCodigoIBGE: Integer;
+    FNome: String;
+    FCEP: Currency;
+    FDDD: Integer;
+    FEstado: TEstado;
+
+    procedure SetIDMunicipio(AValor: Integer);
+    function GetIDMunicipio: Integer;
+
+    procedure SetCodigoIBGE(AValor: Integer);
+    function GetCodigoIBGE: Integer;
+
+    procedure SetNome(AValor: String);
+    function GetNome: String;
+
+    procedure SetCEP(AValor: Currency);
+    function GetCEP: Currency;
+
+    procedure SetDDD(AValor: Integer);
+    function GetDDD: Integer;
+
+    procedure SetEstado(iValor: TEstado);
+    function GetEstado: TEstado;
+
+  public
+    property IDMunicipio: Integer  read GetIDMunicipio  write SetIDMunicipio;
+    property CodigoIBGE: Integer  read GetCodigoIBGE  write SetCodigoIBGE;
+    property Nome: String  read GetNome  write SetNome;
+    property CEP: Currency  read GetCEP  write SetCEP;
+    property DDD: Integer  read GetDDD  write SetDDD;
+    property Estado : TEstado read GetEstado write SetEstado;
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+{ TMunicipio }
+
+constructor TMunicipio.Create;
+begin
+  FIDMunicipio := 0;
+  FCodigoIBGE := 0;
+  FNome := EmptyStr;
+  FCEP := 0;
+  FDDD := 0;
+
+  FEstado:= TEstado.Create;
+end;
+
+
+destructor TMunicipio.Destroy;
+begin
+  if Assigned(FEstado) then
+    FreeAndNil(FEstado);
+  inherited;
+end;
+
+function TMunicipio.GetCEP: Currency;
+begin
+  Result := FCEP;
+end;
+
+function TMunicipio.GetCodigoIBGE: Integer;
+begin
+  Result := FCodigoIBGE;
+end;
+
+function TMunicipio.GetDDD: Integer;
+begin
+  Result := FDDD;
+end;
+
+
+function TMunicipio.GetEstado: TEstado;
+begin
+ Result := FEstado;
+end;
+
+function TMunicipio.GetIDMunicipio: Integer;
+begin
+  Result := FIDMunicipio;
+end;
+
+function TMunicipio.GetNome: String;
+begin
+  Result := FNome;
+end;
+
+procedure TMunicipio.SetCEP(AValor: Currency);
+begin
+  FCEP := AValor;
+end;
+
+procedure TMunicipio.SetCodigoIBGE(AValor: Integer);
+begin
+  FCodigoIBGE := AValor;
+end;
+
+procedure TMunicipio.SetDDD(AValor: Integer);
+begin
+  FDDD := AValor;
+end;
+
+
+procedure TMunicipio.SetEstado(iValor: TEstado);
+begin
+  FEstado := iValor;
+end;
+
+procedure TMunicipio.SetIDMunicipio(AValor: Integer);
+begin
+  FIDMunicipio := AValor;
+end;
+
+procedure TMunicipio.SetNome(AValor: String);
+begin
+  FNome := AValor;
+end;
+
+end.
+
+implementation
+
+end.

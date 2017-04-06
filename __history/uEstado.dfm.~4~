@@ -1,0 +1,36 @@
+inherited frmEstado: TfrmEstado
+  Caption = 'Cadastro de Estado'
+  FormStyle = fsMDIChild
+  Visible = True
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Panel3: TPanel
+    OnClick = Panel3Click
+    object Edit2: TEdit
+      Left = 32
+      Top = 117
+      Width = 209
+      Height = 21
+      TabOrder = 0
+      TextHint = 'UF'
+    end
+    object Edit3: TEdit
+      Left = 32
+      Top = 171
+      Width = 209
+      Height = 21
+      TabOrder = 1
+      TextHint = 'Nome'
+    end
+    object Edit1: TEdit
+      Left = 32
+      Top = 61
+      Width = 209
+      Height = 21
+      TabOrder = 2
+      TextHint = 'Id Estado'
+    end
+  end
+end

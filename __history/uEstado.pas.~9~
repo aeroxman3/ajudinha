@@ -1,0 +1,71 @@
+unit uEstado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls, uEstadoDto, uEstadoController;
+
+type
+  TfrmEstado = class(TfrmBase)
+    edtUf: TEdit;
+    edtNome: TEdit;
+    edtIdEstado: TEdit;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure AdicionarDto;
+    procedure btnSalvarClick(Sender: TObject);
+  private
+    oEstado: TEstado;
+    oEstadoController: TEstadoController;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmEstado: TfrmEstado;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmEstado.AdicionarDto;
+begin
+  oEstado.IDEstado := StrToInt(edtIdEstado.Text);
+  oEstado.UF := edtUf.Text;
+  oEstado.Nome := edtNome.Text;
+end;
+
+procedure TfrmEstado.btnSalvarClick(Sender: TObject);
+begin
+  inherited;
+  AdicionarDto;
+  oEstadoController.Salvar(oEstado);
+end;
+
+procedure TfrmEstado.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+
+  if (assigned(oEstado)) then
+    FreeAndNil(oEstado);
+
+  if (assigned(oEstadoController)) then
+    FreeAndNil(oEstadoController);
+
+  frmEstado := nil;
+end;
+
+procedure TfrmEstado.FormCreate(Sender: TObject);
+begin
+  inherited;
+  if (not(assigned(oEstado))) then
+    oEstado := TEstado.Create;
+
+  if (not(assigned(oEstado))) then
+    oEstadoController := TEstadoController.Create;
+end;
+
+end.
